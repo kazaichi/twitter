@@ -21,16 +21,16 @@ def get(user_info, flag):
     else:  # 名前で検索
         params = {'screen_name' : user_info, 'count' : 5000, 'cursor' : -1}
 
-    all_ID_info = []  # return用
+    all_id_info = []  # return用
     while True:
         res = twitter.get(url, params = params)
         # 正常に通信できた場合
         if res.status_code == 200:
             print("Success!")
-            ID_info = json.loads(res.text)  # レスポンスからタイムラインリストを取得
-            all_ID_info.extend(ID_info['ids'])
-            if ID_info['next_cursor'] != 0:
-                params['cursor'] = ID_info['next_cursor']
+            id_info = json.loads(res.text)  # レスポンスからタイムラインリストを取得
+            all_id_info.extend(id_info['ids'])
+            if id_info['next_cursor'] != 0:
+                params['cursor'] = id_info['next_cursor']
                 print("continue")
             else:
                 print("end")
@@ -49,13 +49,13 @@ def get(user_info, flag):
         else:
             errer.errer_code(res.status_code)
             break
-    return all_ID_info, limit, sec
+    return all_id_info, limit, sec
 
 if __name__ == '__main__':
     user_info = input("スクリーンネーム(＠を除く)を入力してください:")
-    all_ID_info, limit, sec = get(user_info, 0)
-    for ID in all_ID_info:
-        print(ID)
+    all_id_info, limit, sec = get(user_info, 0)
+    for id in all_id_info:
+        print(id)
         print('*******************************************')
     print ("limit: " + str(limit))
     print ("reset sec: " + str(sec))

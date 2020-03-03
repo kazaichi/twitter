@@ -5,11 +5,11 @@
 - GET followers/ids (getFollowers_ids.py)
 - GET followers/list (getFollowers_list.py)
 - GET friends/ids (getFriends_ids.py)
-- GET friends/list (getFriends_list.py)<br> 
+- GET friends/list (getFriends_list.py)
+- GET statuses/user_timeline (getStatuses_user_timeline.py)<br> 
 <p>を作成した。</p>
 
 ### 作成途中(使えないこともない)　
-- GET statuses/user_timeline (getStatuses_user_timeline.py)
 - POST statuses/update (postTweet.py)
 他のAPIについても順次作成予定
 

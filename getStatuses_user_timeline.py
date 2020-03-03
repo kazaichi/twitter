@@ -6,7 +6,6 @@ from requests_oauthlib import OAuth1Session  # OAithのライブラリの読み�
 import datetime, time
 import pause
 import errer
-import dictionary_csv as dict_csv
 
 def get(user_info, flag):
     CK = config.CONSUMER_KEY
@@ -16,12 +15,12 @@ def get(user_info, flag):
     twitter = OAuth1Session(CK, CS, AT, ATS)  # 認証処理
 
     url = "https://api.twitter.com/1.1/statuses/user_timeline.json"  # タイムライン取得エンドポイント
-    
+
     if flag:  # IDで検索
         params = {'user_id' : user_info, 'count' : 5, 'trim_user' : 1, 'exclude_replies' : True}
     else:  # 名前で検索
         params = {'screen_name' : user_info, 'count' : 5, 'trim_user' : 1, 'exclude_replies' : True}
-    
+
     all_timeline_info = []
     while True:
         print('*******************************************')
@@ -51,20 +50,16 @@ def get(user_info, flag):
         else:
             errer.errer_code(res.status_code)
             break
-    
+
     return all_timeline_info, limit, sec
-            
+
 
 if __name__ == '__main__':
     user_info = input("スクリーンネーム(＠を除く)を入力してください:")
     all_timeline_info, limit, sec = get(user_info, 0)
-    print(all_timeline_info)
-    # for list in all_timeline_info:
-    #     print(list['text'])
-    #     print(list['id'])
-    #     print(list['screen_name'])
-    #     print('*******************************************')
+    for timeline in all_timeline_info:
+        print(timeline['text'])
+        print(timeline['id'])
+        print('*******************************************')
     print ("limit: " + str(limit))
     print ("reset sec: " + str(sec))
-    dict_csv.write_csv("hoge1.csv", all_timeline_info[0])
-    dict_csv.write_csv("hoge2.csv", all_timeline_info[1])

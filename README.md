@@ -9,7 +9,7 @@
 <p>を作成した。</p>
 
 ### 作成途中(使えないこともない)　
-- GET statuses/user_timeline (getTimelines.py)
+- GET statuses/user_timeline (getStatuses_user_timeline.py)
 - POST statuses/update (postTweet.py)
 他のAPIについても順次作成予定
 

@@ -15,11 +15,14 @@ def get(user_info, flag):
     twitter = OAuth1Session(CK, CS, AT, ATS)  # 認証処理
 
     url = "https://api.twitter.com/1.1/statuses/user_timeline.json"  # タイムライン取得エンドポイント
-
+    
+    # 'include_rts' : False paramsに追加でリツイートを除くことができる。
+    # コードの仕様上、ある条件で失敗する場合がある
     if flag:  # IDで検索
-        params = {'user_id' : user_info, 'count' : 5, 'trim_user' : 1, 'exclude_replies' : True}
+        params = {'user_id' : user_info, 'count' : 200, 'trim_user' : 1, 'exclude_replies' : True}
     else:  # 名前で検索
-        params = {'screen_name' : user_info, 'count' : 5, 'trim_user' : 1, 'exclude_replies' : True}
+        params = {'screen_name' : user_info, 'count' : 200, 'trim_user' : 1, 'exclude_replies' : True}
+
 
     all_timeline_info = []
     while True:
@@ -30,8 +33,8 @@ def get(user_info, flag):
             print("Success!")
             timeline_info = json.loads(res.text)  # レスポンスからタイムラインリストを取得
             all_timeline_info.extend(timeline_info)
-            if params['count'] == len(timeline_info):
-                params['max_id'] = timeline_info[params['count']-1]['id'] - 1
+            if len(timeline_info) != 0:
+                params['max_id'] = timeline_info[len(timeline_info)-1]['id'] - 1
                 print("continue")
             else:
                 print("end")
